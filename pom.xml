@@ -29,7 +29,29 @@
       <version>4.11</version>
     </dependency>
   </dependencies>
-
+  <repositories>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>nexus-aliyun</id>
+      <name>Nexus aliyun</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>fdd_repostiory</id>
+      <name>fdd_repostiory</name>
+      <url>http://172.18.3.158:8088/nexus/content/repositories/fdd_repostiory/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
   <build>
     <plugins>
       <plugin>
