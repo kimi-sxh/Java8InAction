@@ -10,14 +10,14 @@ public class BuildingStreams {
 
     public static void main(String...args) throws Exception{
         
-        // Stream.of
+        //构建流方式1：Stream.of
         Stream<String> stream = Stream.of("Java 8", "Lambdas", "In", "Action");
         stream.map(String::toUpperCase).forEach(System.out::println);
 
-        // Stream.empty
+        // 构建流方式2：Stream.empty
         Stream<String> emptyStream = Stream.empty();
 
-        // Arrays.stream
+        // 数组构建流：Arrays.stream
         int[] numbers = {2, 3, 5, 7, 11, 13};
         System.out.println(Arrays.stream(numbers).sum());
 
@@ -47,6 +47,7 @@ public class BuildingStreams {
                  .forEach(System.out::println);
 
         IntStream.generate(new IntSupplier(){
+            @Override
             public int getAsInt(){
                 return 2;
             }
@@ -57,6 +58,7 @@ public class BuildingStreams {
         IntSupplier fib = new IntSupplier(){
                   private int previous = 0;
                   private int current = 1;
+                  @Override
                   public int getAsInt(){
                       int nextValue = this.previous + this.current;
                       this.previous = this.current;
@@ -66,7 +68,7 @@ public class BuildingStreams {
               };
          IntStream.generate(fib).limit(10).forEach(System.out::println);
 
-         long uniqueWords = Files.lines(Paths.get("lambdasinaction/chap5/data.txt"), Charset.defaultCharset())
+         long uniqueWords = Files.lines(Paths.get(System.getProperty("user.dir"),"\\target\\classes\\lambdasinaction\\chap5\\data.txt"), Charset.defaultCharset())
                                  .flatMap(line -> Arrays.stream(line.split(" ")))
                                  .distinct()
                                  .count();

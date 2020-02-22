@@ -9,7 +9,8 @@ import static lambdasinaction.chap4.Dish.menu;
 public class NumericStreams{
 
     public static void main(String...args){
-    
+
+        // 5.6.1
         List<Integer> numbers = Arrays.asList(3,4,5,1,2);
 
         Arrays.stream(numbers.toArray()).forEach(System.out::println);
@@ -19,19 +20,21 @@ public class NumericStreams{
         System.out.println("Number of calories:" + calories);
 
 
-        // max and OptionalInt
+        // 5.6.1 max and OptionalInt
         OptionalInt maxCalories = menu.stream()                                                      
                                       .mapToInt(Dish::getCalories)
                                       .max();
 
         int max;
-        if(maxCalories.isPresent()){
-            max = maxCalories.getAsInt();
-        }
-        else {
-            // we can choose a default value
-            max = 1;
-        }
+        //写法1
+//        if(maxCalories.isPresent()){
+//            max = maxCalories.getAsInt();
+//        } else {
+//            // we can choose a default value
+//            max = 1;
+//        }
+        //写法2
+        max = maxCalories.orElse(1);
         System.out.println(max);
 
         // numeric ranges

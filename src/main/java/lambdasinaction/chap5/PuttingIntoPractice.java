@@ -1,10 +1,11 @@
 package lambdasinaction.chap5;
 
-import lambdasinaction.chap5.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import java.util.*;
-
-import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 public class PuttingIntoPractice{
@@ -25,11 +26,17 @@ public class PuttingIntoPractice{
         
         
         // Query 1: Find all transactions from year 2011 and sort them by value (small to high).
-        List<Transaction> tr2011 = transactions.stream()
+        List<Transaction> asc2011 = transactions.stream()
                                                .filter(transaction -> transaction.getYear() == 2011)
-                                               .sorted(comparing(Transaction::getValue))
+                                               .sorted(Comparator.comparing(Transaction::getValue))
                                                .collect(toList());
-        System.out.println(tr2011);
+        System.out.println(asc2011);
+        List<Transaction> desc2011 = transactions.stream()
+                .filter(transaction -> transaction.getYear() == 2011)
+                .sorted(Comparator.comparing(Transaction::getValue).reversed())
+                .collect(toList());
+        System.out.println(desc2011);
+
         
         // Query 2: What are all the unique cities where the traders work?
         List<String> cities = 
@@ -46,7 +53,7 @@ public class PuttingIntoPractice{
                         .map(Transaction::getTrader)
                         .filter(trader -> trader.getCity().equals("Cambridge"))
                         .distinct()
-                        .sorted(comparing(Trader::getName))
+                        .sorted(Comparator.comparing(Trader::getName))
                         .collect(toList());
         System.out.println(traders);
         
@@ -73,10 +80,10 @@ public class PuttingIntoPractice{
         
         
         // Query 6: Update all transactions so that the traders from Milan are set to Cambridge.
-        transactions.stream()
+        Stream<Trader> stream = transactions.stream()
                     .map(Transaction::getTrader)
-                    .filter(trader -> trader.getCity().equals("Milan"))
-                    .forEach(trader -> trader.setCity("Cambridge"));
+                    .filter(trader -> trader.getCity().equals("Milan"));
+        stream.forEach(trader -> trader.setCity("Cambridge"));
         System.out.println(transactions);
         
         
@@ -85,6 +92,10 @@ public class PuttingIntoPractice{
             transactions.stream()
                         .map(Transaction::getValue)
                         .reduce(0, Integer::max);
-        System.out.println(highestValue);      
+        System.out.println(highestValue);
+
+        // Query 8: What's the lowest value in all the transactions?
+        Optional<Transaction> optional = transactions.stream().min(Comparator.comparing(Transaction::getValue));
+        System.out.println(optional.get().getValue());
     }
 }

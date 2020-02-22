@@ -1,17 +1,18 @@
 package lambdasinaction.chap3;
 
 import java.util.*;
+import java.util.function.Function;
+
 import static java.util.Comparator.comparing;
 
 public class Sorting {
 
     public static void main(String...args){
 
-        // 1
+        /****************************** 3.7 **********************************/
+        //3.7.1 传递代码
         List<Apple> inventory = new ArrayList<>();
         inventory.addAll(Arrays.asList(new Apple(80,"green"), new Apple(155, "green"), new Apple(120, "red")));
-
-        // [Apple{color='green', weight=80}, Apple{color='red', weight=120}, Apple{color='green', weight=155}]
         inventory.sort(new AppleComparator());
         System.out.println(inventory);
 
@@ -39,8 +40,22 @@ public class Sorting {
         
         // 4
         // [Apple{color='red', weight=10}, Apple{color='red', weight=20}, Apple{color='green', weight=155}]
-        inventory.sort(comparing(Apple::getWeight));
-        System.out.println(inventory);       
+        Function<Apple,Integer> appleCompareFunction = Apple::getWeight;
+        inventory.sort(comparing(appleCompareFunction));
+        System.out.println(inventory);
+
+        //******************************* 3.7 ******************************************//
+
+        //******************************* 3.8 ******************************************//
+        // 3.8.1 逆序排序
+        inventory.sort(comparing(appleCompareFunction).reversed());
+        System.out.println(inventory);
+
+        //3.8.2 比较器链
+        // reshuffling things a little
+        inventory.set(0, new Apple(20, "green"));
+        inventory.sort(comparing(appleCompareFunction).reversed().thenComparing(Apple::getColor).reversed());
+        System.out.println(inventory);
     }
 
     public static class Apple {

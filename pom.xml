@@ -53,6 +53,23 @@
     </repository>
   </repositories>
   <build>
+    <resources>
+      <!-- 设置编译文件后缀，要不然dll exe文件没有编译到类路径下 -->
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
