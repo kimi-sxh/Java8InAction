@@ -34,6 +34,7 @@ public class Filtering{
                 .collect(toList());
 
         dishesLimit3.forEach(System.out::println);
+        //dishesLimit3.forEach(dish -> System.out.println(dish));
 
         // Skipping elements
         List<Dish> dishesSkip2 =

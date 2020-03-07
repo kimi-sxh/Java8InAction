@@ -15,14 +15,32 @@ public class PartitionPrimeNumbers {
 
     }
 
+    /**
+     * <b>概要：</b>:
+     *      计算n范围内的质数和合数集合
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/5 16:10 </br>
+     * @param n 数组n
+     * @return
+     */
     public static Map<Boolean, List<Integer>> partitionPrimes(int n) {
-        return IntStream.rangeClosed(2, n).boxed()
-                .collect(partitioningBy(candidate -> isPrime(candidate)));
+        Predicate<Integer> primePredicate = candidate -> isPrime(candidate);
+        Collector<Integer,?, Map<Boolean,List<Integer>>> isPrimeCollector = Collectors.partitioningBy(primePredicate);
+        Stream<Integer> intStream = IntStream.rangeClosed(2, n).boxed();//数字流
+        return intStream.collect(isPrimeCollector);
     }
 
+    /**
+     * <b>概要：</b>:
+     *      判断是否是质数
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/5 15:57 </br>
+     * @param candidate 数字
+     * @return true:质数 false：合数
+     */
     public static boolean isPrime(int candidate) {
         return IntStream.rangeClosed(2, candidate-1)
-                .limit((long) Math.floor(Math.sqrt((double) candidate)) - 1)
+                .limit((long) Math.floor(Math.sqrt((double) candidate)) - 1)//其简单的使用从2到n的开根的数作为除数。这样的算法复杂度几乎是O(n*log(n))
                 .noneMatch(i -> candidate % i == 0);
     }
 

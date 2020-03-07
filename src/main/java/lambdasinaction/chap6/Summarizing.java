@@ -6,6 +6,19 @@ import java.util.function.*;
 import static java.util.stream.Collectors.*;
 import static lambdasinaction.chap6.Dish.menu;
 
+/**
+ * <h3>概要:</h3>
+ *  6.2 规约和汇总
+ * <br>
+ * <h3>功能:</h3>
+ * <ol>
+ * <li>TODO(这里用一句话描述功能点)</li>
+ * </ol>
+ * <h3>履历:</h3>
+ * <ol>
+ * <li>2020/2/13[SUXH] 新建</li>
+ * </ol>
+ */
 public class Summarizing {
 
     public static void main(String ... args) {
@@ -19,19 +32,45 @@ public class Summarizing {
         System.out.println("Short menu comma separated: " + getShortMenuCommaSeparated());
     }
 
-
+    /**
+     * <b>概要：</b>:
+     *      计算菜单量：Collectors#counting()
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/7 19:50 </br>
+     * @param:
+     * @return:
+     */
     private static long howManyDishes() {
         return menu.stream().collect(counting());
     }
 
+    /**
+     * <b>概要：</b>:
+     *      计算最大热量
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/7 19:51 </br>
+     * @param:
+     * @return:
+     */
     private static Dish findMostCaloricDish() {
         return menu.stream().collect(reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2)).get();
     }
 
+    /**
+     * <b>概要：</b>:
+     *      使用Comparator计算最大热量
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/7 19:54 </br>
+     * @param:
+     * @return:
+     */
     private static Dish findMostCaloricDishUsingComparator() {
-        Comparator<Dish> dishCaloriesComparator = Comparator.comparingInt(Dish::getCalories);
-        BinaryOperator<Dish> moreCaloricOf = BinaryOperator.maxBy(dishCaloriesComparator);
-        return menu.stream().collect(reducing(moreCaloricOf)).get();
+        Comparator<Dish> dishComparator = Comparator.comparingInt(Dish::getCalories);
+        Optional<Dish> dishOptional = menu.stream().collect(maxBy(dishComparator));
+        return dishOptional.get();
+//        Comparator<Dish> dishCaloriesComparator = Comparator.comparingInt(Dish::getCalories);
+//        BinaryOperator<Dish> moreCaloricOf = BinaryOperator.maxBy(dishCaloriesComparator);
+//        return menu.stream().collect(reducing(moreCaloricOf)).get();
     }
 
     private static int calculateTotalCalories() {
