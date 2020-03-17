@@ -7,14 +7,31 @@ import static java.util.stream.Collector.Characteristics.*;
 
 public class ToListCollector<T> implements Collector<T, List<T>, List<T>> {
 
+    /**
+     * <b>概要：</b>:
+     *      建立新的容器
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/14 16:42 </br>
+     * @return 创建空的累加器，供数据收集过程使用
+     */
     @Override
     public Supplier<List<T>> supplier() {
-        return () -> new ArrayList<T>();
+        return ArrayList::new;
+        //return () -> new ArrayList<T>();
     }
 
+    /**
+     * <b>概要：</b>:
+     *      将元素添加到结果容器
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/14 16:43 </br>
+     * @param:
+     * @return:
+     */
     @Override
     public BiConsumer<List<T>, T> accumulator() {
-        return (list, item) -> list.add(item);
+        return List::add;
+        //return (list, item) -> list.add(item);
     }
 
     @Override

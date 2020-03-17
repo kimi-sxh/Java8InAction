@@ -18,6 +18,14 @@ public class ParallelStreamsHarness {
         System.out.println("SideEffect prallel sum done in: " + measurePerf(ParallelStreams::sideEffectParallelSum, 10_000_000L) + " msecs" );
     }
 
+    /**
+     * <b>概要：</b>:
+     *      测量方法f的执行效率
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/15 19:23 </br>
+     * @param:
+     * @return:
+     */
     public static <T, R> long measurePerf(Function<T, R> f, T input) {
         long fastest = Long.MAX_VALUE;
         for (int i = 0; i < 10; i++) {

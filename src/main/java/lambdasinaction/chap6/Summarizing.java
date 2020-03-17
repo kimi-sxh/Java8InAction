@@ -8,7 +8,7 @@ import static lambdasinaction.chap6.Dish.menu;
 
 /**
  * <h3>概要:</h3>
- *  6.2 规约和汇总
+ *  6.2 规约和汇总（计算最大值，最小值，平均值，总和，连接字符串等）
  * <br>
  * <h3>功能:</h3>
  * <ol>
@@ -32,6 +32,7 @@ public class Summarizing {
         System.out.println("Short menu comma separated: " + getShortMenuCommaSeparated());
     }
 
+    //-----------------6.2.1 计算流中最大值和最小值----------------------------
     /**
      * <b>概要：</b>:
      *      计算菜单量：Collectors#counting()
@@ -72,7 +73,10 @@ public class Summarizing {
 //        BinaryOperator<Dish> moreCaloricOf = BinaryOperator.maxBy(dishCaloriesComparator);
 //        return menu.stream().collect(reducing(moreCaloricOf)).get();
     }
+    //-----------------6.2.1 计算流中最大值和最小值----------------------------
 
+
+    //-------------------6.2.2 汇总 计算总和，平均值--------------------
     private static int calculateTotalCalories() {
         return menu.stream().collect(summingInt(Dish::getCalories));
     }
@@ -84,7 +88,10 @@ public class Summarizing {
     private static IntSummaryStatistics calculateMenuStatistics() {
         return menu.stream().collect(summarizingInt(Dish::getCalories));
     }
+    //-------------------6.2.2 汇总 计算最大值，最小值，平均值--------------------
 
+
+    //--------------------6.2.3 连接字符串--------------------------
     private static String getShortMenu() {
         return menu.stream().map(Dish::getName).collect(joining());
     }
@@ -92,4 +99,5 @@ public class Summarizing {
     private static String getShortMenuCommaSeparated() {
         return menu.stream().map(Dish::getName).collect(joining(", "));
     }
+    //--------------------6.2.3 连接字符串--------------------------
 }

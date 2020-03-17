@@ -39,15 +39,33 @@ public class PartitionPrimeNumbers {
      * @return true:质数 false：合数
      */
     public static boolean isPrime(int candidate) {
+        IntPredicate intPredicate = i -> candidate % i == 0;//查看取模是不是为0
         return IntStream.rangeClosed(2, candidate-1)
                 .limit((long) Math.floor(Math.sqrt((double) candidate)) - 1)//其简单的使用从2到n的开根的数作为除数。这样的算法复杂度几乎是O(n*log(n))
-                .noneMatch(i -> candidate % i == 0);
+                .noneMatch(intPredicate);
     }
 
+    /**
+     * <b>概要：</b>:
+     *      自定义collector 获取质数有哪些，合数有哪些
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/15 10:10 </br>
+     * @param:
+     * @return:
+     */
     public static Map<Boolean, List<Integer>> partitionPrimesWithCustomCollector(int n) {
         return IntStream.rangeClosed(2, n).boxed().collect(new PrimeNumbersCollector());
     }
 
+    /**
+     * <b>概要：</b>:
+     *      是否为质数判断
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/15 10:20 </br>
+     * @param primes candidate前的质数集合
+     * @param candidate 待确定的数
+     * @return true:质数 false:合数
+     */
     public static boolean isPrime(List<Integer> primes, Integer candidate) {
         double candidateRoot = Math.sqrt((double) candidate);
         //return takeWhile(primes, i -> i <= candidateRoot).stream().noneMatch(i -> candidate % i == 0);
@@ -65,9 +83,19 @@ public class PartitionPrimeNumbers {
         return list;
     }
 */
+
+
     public static class PrimeNumbersCollector
             implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
 
+        /**
+         * <b>概要：</b>:
+         *      从一个有两个空List的map开始收集
+         * <b>作者：</b>SUXH</br>
+         * <b>日期：</b>2020/3/15 8:39 </br>
+         * @param:
+         * @return:
+         */
         @Override
         public Supplier<Map<Boolean, List<Integer>>> supplier() {
             return () -> new HashMap<Boolean, List<Integer>>() {{
@@ -76,6 +104,13 @@ public class PartitionPrimeNumbers {
             }};
         }
 
+        /**
+         * <b>概要：</b>:
+         *      实现规约，轮询判断candidate是否为质数
+         * <b>作者：</b>SUXH</br>
+         * <b>日期：</b>2020/3/15 8:41 </br> 
+         * @return:
+         */
         @Override
         public BiConsumer<Map<Boolean, List<Integer>>, Integer> accumulator() {
             return (Map<Boolean, List<Integer>> acc, Integer candidate) -> {

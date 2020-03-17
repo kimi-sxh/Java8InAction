@@ -1,22 +1,19 @@
 package lambdasinaction.chap5;
-import lambdasinaction.chap4.*;
+import lambdasinaction.chap4.Dish;
 
-import java.util.stream.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+
 import static java.util.stream.Collectors.toList;
-
 import static lambdasinaction.chap4.Dish.menu;
 
 public class Filtering{
 
     public static void main(String...args){
-
-        // Filtering with predicate
-        List<Dish> vegetarianMenu =
-            menu.stream()
-                .filter(Dish::isVegetarian)
-                .collect(toList());
-
+        //用 predicate过滤
+        Predicate<Dish> isVegetarian = Dish::isVegetarian;
+        List<Dish> vegetarianMenu = menu.stream().filter(isVegetarian).collect(toList());
         vegetarianMenu.forEach(System.out::println);
 
         // Filtering unique elements

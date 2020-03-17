@@ -9,6 +9,8 @@ public class Dish {
     private final String name;
     private final boolean vegetarian;
     private final int calories;
+
+    /** 菜肴类型 肉 鱼 其他  */
     private final Type type;
 
     public Dish(String name, boolean vegetarian, int calories, Type type) {
