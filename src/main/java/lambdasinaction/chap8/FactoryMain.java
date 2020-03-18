@@ -13,8 +13,10 @@ public class FactoryMain {
         Supplier<Product> loanSupplier = Loan::new;
         Product p2 = loanSupplier.get();
 
+        //每次获取都是新的对象
         Product p3 = ProductFactory.createProductLambda("loan");
-
+        Product p4 = ProductFactory.createProductLambda("loan");
+        Product p5 = ProductFactory.createProductLambda("loan");
     }
 
     static private class ProductFactory {

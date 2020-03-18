@@ -1,6 +1,8 @@
 package lambdasinaction.chap6;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.asList;
 
@@ -66,5 +68,15 @@ public class Dish {
         dishTags.put("pizza", asList("tasty", "salty"));
         dishTags.put("prawns", asList("tasty", "roasted"));
         dishTags.put("salmon", asList("delicious", "fresh"));
+    }
+
+    public static Grouping.CaloricLevel getCaloricLevel(Dish dish) {
+        if (dish.getCalories() <= 400) {
+            return Grouping.CaloricLevel.DIET;
+        }  else if (dish.getCalories() <= 700) {
+            return Grouping.CaloricLevel.NORMAL;
+        } else {
+            return Grouping.CaloricLevel.FAT;
+        }
     }
 }

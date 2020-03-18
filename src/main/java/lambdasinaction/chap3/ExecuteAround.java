@@ -3,6 +3,14 @@ package lambdasinaction.chap3;
 import java.io.*;
 import java.net.URLDecoder;
 
+/**
+ * <b>概要：</b>:
+ * 	8.1.5 环绕执行
+ * <b>作者：</b>SUXH</br>
+ * <b>日期：</b>2020/3/17 21:01 </br>
+ * @param:
+ * @return:
+ */
 public class ExecuteAround {
 
 	public static void main(String ...args) throws IOException{
@@ -17,7 +25,6 @@ public class ExecuteAround {
 
 		String oneLine = processFile(txtAbsolutePath,(BufferedReader b) -> b.readLine());
 		System.out.println(oneLine);
-
 		String twoLines = processFile(txtAbsolutePath, (BufferedReader b) -> b.readLine() + b.readLine());
 		System.out.println(twoLines);
 
@@ -30,13 +37,19 @@ public class ExecuteAround {
         }
     }
 
-
-	public static String processFile(String filePath,BufferedReaderProcessor p) throws IOException {
-
+	/**
+	 * <b>概要：</b>:
+	 * 		执行读取文件操作
+	 * <b>作者：</b>SUXH</br>
+	 * <b>日期：</b>2020/3/17 21:00 </br>
+	 * @param filePath 文件路径
+	 * @param processor 传递行为模式如何读取
+	 * @return 读取内容
+	 */
+	public static String processFile(String filePath,BufferedReaderProcessor processor) throws IOException {
 		try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
-			return p.process(br);
+			return processor.process(br);
 		}
-
 	}
 
 	/**

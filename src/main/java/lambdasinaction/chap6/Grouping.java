@@ -39,6 +39,7 @@ public class Grouping {
         System.out.println("Most caloric dishes by type: " + mostCaloricDishesByTypeWithoutOprionals());
         System.out.println("Sum calories by type: " + sumCaloriesByType());
         System.out.println("Caloric levels by type: " + caloricLevelsByType());
+        System.out.println("Optimize caloric levels by type: " + optimizeCaloricLevelsByType());
     }
 
 
@@ -194,14 +195,40 @@ public class Grouping {
 
 
 
-
-
+    //---------------------------  8.1.3节优化  --------------------------
+    /**
+     * <b>概要：</b>:
+     *      Dish类别对应热量类型有哪些
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/17 20:39 </br>
+     * @return:
+     */
     private static Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType() {
-        return menu.stream().collect(
-                groupingBy(Dish::getType, mapping(
-                        dish -> { if (dish.getCalories() <= 400) return CaloricLevel.DIET;
-                        else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
-                        else return CaloricLevel.FAT; },
-                        toSet() )));
+        Function<Dish, CaloricLevel> dish2CaloricLevel = (Dish dish) -> {
+            if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+            else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+            else return CaloricLevel.FAT;
+        };
+        Collector<CaloricLevel, ?, Set<CaloricLevel>> caloricLevelSetCollector = Collectors.toSet();
+        Collector<Dish, ?, Set<CaloricLevel>> mapping = Collectors.mapping(dish2CaloricLevel, caloricLevelSetCollector);
+        Collector<Dish, ?, Map<Dish.Type, Set<CaloricLevel>>> dishMapCollector = groupingBy(Dish::getType, mapping);
+        return menu.stream().collect(dishMapCollector);
     }
+
+    /**
+     * <b>概要：</b>:
+     *      Dish类别对应热量类型有哪些
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/17 20:39 </br>
+     * @return:
+     */
+    private static Map<Dish.Type, Set<CaloricLevel>> optimizeCaloricLevelsByType() {
+        Function<Dish, CaloricLevel> dish2CaloricLevel = Dish::getCaloricLevel;
+        Collector<CaloricLevel, ?, Set<CaloricLevel>> caloricLevelSetCollector = Collectors.toSet();
+        Collector<Dish, ?, Set<CaloricLevel>> mapping = Collectors.mapping(dish2CaloricLevel, caloricLevelSetCollector);
+        Collector<Dish, ?, Map<Dish.Type, Set<CaloricLevel>>> dishMapCollector = groupingBy(Dish::getType, mapping);
+        return menu.stream().collect(dishMapCollector);
+    }
+    //---------------------------  8.1.3节优化  --------------------------
+
 }
