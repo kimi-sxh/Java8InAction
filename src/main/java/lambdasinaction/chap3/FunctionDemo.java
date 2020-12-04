@@ -21,7 +21,7 @@ import java.util.function.Function;
 public class FunctionDemo {
 
     public static void main(String[] args) {
-       List<Integer> lengths = map(Arrays.asList("kimi","tracy","curry"),(String str)->str.length());
+        List<Integer> lengths = map(Arrays.asList("kimi","tracy","curry"),String::length);
         System.out.println(lengths);
 
         //3.6
@@ -34,6 +34,15 @@ public class FunctionDemo {
         System.out.println(h.apply(1));
     }
 
+    /**
+     * <b>概要：</b>:
+     *      对list<T>应用函数function获得list<R>
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/6/3 10:47 </br>
+     * @param list 集合数据
+     * @param function 函数式接口Function
+     * @return:
+     */
     public static <T,R> List<R> map(List<T> list, Function<T,R> function) {
         List<R> result = new ArrayList<>();
         for(T each:list) {

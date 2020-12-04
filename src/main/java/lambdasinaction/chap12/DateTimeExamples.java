@@ -1,27 +1,18 @@
 package lambdasinaction.chap12;
 
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.nextOrSame;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
+import java.time.*;
 import java.time.chrono.JapaneseDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
 
 public class DateTimeExamples {
 
@@ -36,6 +27,12 @@ public class DateTimeExamples {
         useLocalDate();
         useTemporalAdjuster();
         useDateFormatter();
+        useTimeZone();
+
+        LocalDate date = LocalDate.of(2014,3,18);
+        date = date.with(ChronoField.MONTH_OF_YEAR,9);
+        date = date.plusYears(2).minusDays(10);
+        System.out.println(date.withYear(2011));
     }
 
     private static void useOldDate() {
@@ -96,18 +93,24 @@ public class DateTimeExamples {
         System.out.println(japaneseDate);
     }
 
+    /**
+     * <b>概要：</b>:
+     *      使用TemporalAdjusters的工厂方法TemporalAdjuster灵活设置日期
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/4/2 9:58 </br>
+     */
     private static void useTemporalAdjuster() {
-        LocalDate date = LocalDate.of(2014, 3, 18);
-        date = date.with(nextOrSame(DayOfWeek.SUNDAY));
+        LocalDate date = LocalDate.of(2020, 4, 2);
+        date = date.with(nextOrSame(DayOfWeek.SUNDAY));//下一个星期日
         System.out.println(date);
-        date = date.with(lastDayOfMonth());
+        date = date.with(lastDayOfMonth());//这个月最后一日
         System.out.println(date);
 
-        date = date.with(new NextWorkingDay());
+        date = date.with(new NextWorkingDay());//下一个工作日
         System.out.println(date);
         date = date.with(nextOrSame(DayOfWeek.FRIDAY));
         System.out.println(date);
-        date = date.with(new NextWorkingDay());
+        date = date.with(new NextWorkingDay());//下一个工作日
         System.out.println(date);
 
         date = date.with(nextOrSame(DayOfWeek.FRIDAY));
@@ -119,6 +122,8 @@ public class DateTimeExamples {
             if (dow == DayOfWeek.SATURDAY) dayToAdd = 2;
             return temporal.plus(dayToAdd, ChronoUnit.DAYS);
         });
+        System.out.println(date);//自定义下一个工作日
+        date  = date.with(new NextWorkingDay());
         System.out.println(date);
     }
 
@@ -152,6 +157,20 @@ public class DateTimeExamples {
                 .toFormatter(Locale.ITALIAN);
 
         System.out.println(date.format(complexFormatter));
+    }
+
+    private static void useTimeZone() {
+        LocalDate localDate = LocalDate.of(2020,4,2);
+        ZoneId zoneId = ZoneId.of("Europe/Rome");
+        //ZoneId zoneId = ZoneId.of("Asia/Shanghai");
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(zoneId);
+        System.out.println(zonedDateTime);
+
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        ZoneOffset zoneOffset = ZoneOffset.of("-05:00");
+        OffsetDateTime offsetDateTime = OffsetDateTime.of(localDateTime,zoneOffset);
+        System.out.println(offsetDateTime);
     }
 
 }

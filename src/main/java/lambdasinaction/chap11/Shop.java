@@ -1,9 +1,9 @@
 package lambdasinaction.chap11;
 
+import java.util.Random;
+
 import static lambdasinaction.chap11.Util.delay;
 import static lambdasinaction.chap11.Util.format;
-
-import java.util.Random;
 
 public class Shop {
 
@@ -15,6 +15,14 @@ public class Shop {
         random = new Random(name.charAt(0) * name.charAt(1) * name.charAt(2));
     }
 
+    /**
+     * <b>概要：</b>:
+     *      根据产品名称返回价格
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/27 19:18 </br>
+     * @param:
+     * @return:
+     */
     public String getPrice(String product) {
         double price = calculatePrice(product);
         Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];

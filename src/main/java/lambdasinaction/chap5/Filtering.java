@@ -12,7 +12,8 @@ public class Filtering{
 
     public static void main(String...args){
         //用 predicate过滤
-        Predicate<Dish> isVegetarian = Dish::isVegetarian;
+        //Predicate<Dish> isVegetarian = Dish::isVegetarian;
+        Predicate<Dish> isVegetarian = (Dish dish) -> dish.isVegetarian();
         List<Dish> vegetarianMenu = menu.stream().filter(isVegetarian).collect(toList());
         vegetarianMenu.forEach(System.out::println);
 

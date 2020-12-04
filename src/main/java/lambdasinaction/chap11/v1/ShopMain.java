@@ -25,6 +25,12 @@ public class ShopMain {
     System.out.println("Price returned after " + retrievalTime + " msecs");
   }
 
+  /**
+   * <b>概要：</b>:
+   *        做其他事情
+   * <b>作者：</b>SUXH</br>
+   * <b>日期：</b>2020/3/27 19:31 </br>
+   */
   private static void doSomethingElse() {
       System.out.println("Doing something else...");
   }

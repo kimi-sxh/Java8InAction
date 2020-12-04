@@ -13,6 +13,14 @@ public class Util {
     private static final Random RANDOM = new Random(0);
     private static final DecimalFormat formatter = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
 
+    /**
+     * <b>概要：</b>:
+     *      模拟其他复杂操作（比如查询供应商及对应折扣）
+     * <b>作者：</b>SUXH</br>
+     * <b>日期：</b>2020/3/27 19:19 </br>
+     * @param:
+     * @return:
+     */
     public static void delay() {
         int delay = 1000;
         //int delay = 500 + RANDOM.nextInt(2000);

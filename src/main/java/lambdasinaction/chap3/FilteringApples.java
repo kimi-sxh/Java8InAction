@@ -8,8 +8,9 @@ public class FilteringApples {
 
 	public static void main(String ... args){
 
-		List<Apple> inventory = Arrays.asList(new Apple(80,"green"), new Apple(155, "green"), new Apple(120, "red"));	
-
+		List<Apple> inventory = Arrays.asList(new Apple(80,"green"), new Apple(155, "green"), new Apple(120, "red"));
+		inventory = FilteringApples.filter(inventory,(apple)->"green".equals(apple.getColor()));
+		inventory.forEach(System.out::println);
 	}
 
 	public static List<Apple> filterGreenApples(List<Apple> inventory){
@@ -113,20 +114,20 @@ public class FilteringApples {
 		}
 	}
 
-	//-----------------------------2.3.4 ---------------------------
-	interface Predicate<T>{
-		boolean test(T t);
-	}
-
-	static <T> List<T> filter(List<T> inventory,Predicate<T> predicate) {
-		List<T> result = new ArrayList<>();
-		for(T each : inventory){
-			if(predicate.test(each)){
-				result.add(each);
-			}
-		}
-		return result;
-	}
+//	//-----------------------------2.3.4 ---------------------------
+//	interface Predicate<T>{
+//		boolean test(T t);
+//	}
+//
+//	static <T> List<T> filter(List<T> inventory,Predicate<T> predicate) {
+//		List<T> result = new ArrayList<>();
+//		for(T each : inventory){
+//			if(predicate.test(each)){
+//				result.add(each);
+//			}
+//		}
+//		return result;
+//	}
 
 
 }

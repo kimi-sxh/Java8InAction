@@ -4,7 +4,11 @@ import java.util.*;
 
 public class Person {
 
-    private Optional<Car> car;
+    private Optional<Car> car = Optional.empty();
+
+    public void setCar(Optional<Car> car) {
+        this.car = car;
+    }
 
     public Optional<Car> getCar() {
         return car;

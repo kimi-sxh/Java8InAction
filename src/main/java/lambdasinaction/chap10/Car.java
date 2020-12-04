@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Car {
 
-    private Optional<Insurance> insurance;
+    private Optional<Insurance> insurance = Optional.empty();
 
     public Optional<Insurance> getInsurance() {
         return insurance;
